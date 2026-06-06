@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-zinc-950 text-zinc-50">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BookManager</title>
+    
+    <!-- Modern Sans-Serif Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS v4 CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: radial-gradient(circle at top right, rgba(24, 24, 27, 1) 40%, rgba(9, 9, 11, 1) 100%);
+        }
+        .glass-card {
+            background: rgba(24, 24, 27, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(63, 63, 70, 0.4);
+        }
+        .glass-nav {
+            background: rgba(9, 9, 11, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(63, 63, 70, 0.3);
+        }
+    </style>
+</head>
+<body class="flex flex-col h-full antialiased selection:bg-violet-500/30 selection:text-violet-200">
+    <header class="sticky top-0 z-40 glass-nav">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-violet-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                    <span class="text-sm font-bold text-white tracking-wider">B</span>
+                </div>
+                <a class="text-lg font-semibold tracking-tight text-white hover:text-zinc-200 transition-colors" asp-controller="Books" asp-action="Index">
+                    Book<span class="text-violet-400 font-light">Manager</span>
+                </a>
+            </div>
+            <nav class="flex items-center space-x-6">
+                <a class="text-sm font-medium text-zinc-400 hover:text-zinc-100 transition-colors" asp-controller="Books" asp-action="Index">Books Directory</a>
+            </nav>
+        </div>
+    </header>
+
+    <main role="main" class="flex-grow max-w-6xl w-full mx-auto px-6 py-8">
+        @RenderBody()
+    </main>
+
+    <footer class="border-t border-zinc-900 bg-zinc-950/80 py-6">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between text-xs text-zinc-500 space-y-3 md:space-y-0">
+            <div>
+                &copy; 2026 - BookManager App. Built with GraphQL & Tailwind.
+            </div>
+            <div class="flex space-x-4">
+                <span class="hover:text-zinc-350 transition-colors">Clean & Minimal Design</span>
+            </div>
+        </div>
+    </footer>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
