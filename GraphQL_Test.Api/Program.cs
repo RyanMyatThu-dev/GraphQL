@@ -7,16 +7,20 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+// Register AppDbContext to use the In-Memory database provider
+builder.Services.AddPooledDbContextFactory<AppDbContext>(options =>
+    options.UseInMemoryDatabase("BookDb"));
+
 builder.Services
        .AddGraphQLServer()
        .AddQueryType<Query>()
        .AddMutationType<Mutation>()
+       .RegisterDbContextFactory<AppDbContext>()
+       .ModifyRequestOptions(opt => opt.IncludeExceptionDetails = builder.Environment.IsDevelopment())
        .AddFiltering()
        .AddSorting();
 
-// Register AppDbContext to use the In-Memory database provider
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseInMemoryDatabase("BookDb"));
+
 
 
 builder.Services.AddControllers();
@@ -31,16 +35,19 @@ var app = builder.Build();
 // Seed initial data into the In-Memory DB
 using (var scope = app.Services.CreateScope())
 {
-    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    dbContext.Database.EnsureCreated();
-    if (!dbContext.Books.Any())
+    var dbContextFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<AppDbContext>>();
+    using (var dbContext = dbContextFactory.CreateDbContext())
     {
-        dbContext.Books.AddRange(
-            new Book { Title = "The C# Player's Guide", Author = "Jeremy Clark", Price = 29.99m },
-            new Book { Title = "Clean Code", Author = "Robert C. Martin", Price = 39.99m },
-            new Book { Title = "GraphQL in Action", Author = "Samer Buna", Price = 34.99m }
-        );
-        dbContext.SaveChanges();
+        dbContext.Database.EnsureCreated();
+        if (!dbContext.Books.Any())
+        {
+            dbContext.Books.AddRange(
+                new Book { Title = "The C# Player's Guide", Author = "Jeremy Clark", Price = 29.99m },
+                new Book { Title = "Clean Code", Author = "Robert C. Martin", Price = 39.99m },
+                new Book { Title = "GraphQL in Action", Author = "Samer Buna", Price = 34.99m }
+            );
+            dbContext.SaveChanges();
+        }
     }
 }
 

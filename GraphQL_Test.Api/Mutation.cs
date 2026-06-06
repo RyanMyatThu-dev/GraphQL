@@ -5,15 +5,11 @@ namespace GraphQL_Test.Api
 {
     public class Mutation
     {
-        private readonly AppDbContext _dbContext;
-        public Mutation(AppDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
         public async Task<Book> AddBook(
-            string title, 
-            string author, 
-            decimal price
+            string title,
+            string author,
+            decimal price,
+            AppDbContext context
             )
         {
             var book = new Book
@@ -23,20 +19,21 @@ namespace GraphQL_Test.Api
                 Price = price
             };
 
-            _dbContext.Books.Add(book);
-            await _dbContext.SaveChangesAsync();
+            context.Books.Add(book);
+            await context.SaveChangesAsync();
 
             return book;
         }
 
         public async Task<Book?> UpdateBook(
-            int id, 
-            string title, 
-            string author, 
-            decimal price
+            int id,
+            string title,
+            string author,
+            decimal price,
+            AppDbContext context
             )
         {
-            var book = await _dbContext.Books.FindAsync(id);
+            var book = await context.Books.FindAsync(id);
             if (book == null)
             {
                 return null;
@@ -46,21 +43,23 @@ namespace GraphQL_Test.Api
             book.Author = author;
             book.Price = price;
 
-            await _dbContext.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
             return book;
         }
 
-        public async Task<bool> DeleteBook(int id)
+        public async Task<bool> DeleteBook(int id,
+            AppDbContext context
+        )
         {
-            var book = await _dbContext.Books.FindAsync(id);
+            var book = await context.Books.FindAsync(id);
             if (book == null)
             {
                 return false;
             }
 
-            _dbContext.Books.Remove(book);
-            await _dbContext.SaveChangesAsync();
+            context.Books.Remove(book);
+            await context.SaveChangesAsync();
 
             return true;
         }
