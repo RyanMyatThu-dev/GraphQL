@@ -1,0 +1,64 @@
+@model GraphQL_Test.Database.Models.Book
+
+@{
+    ViewData["Title"] = "Add New Book";
+}
+
+<div class="max-w-xl mx-auto space-y-6">
+    <!-- Header -->
+    <div class="flex items-center space-x-2 text-sm text-zinc-400">
+        <a asp-action="Index" class="hover:text-zinc-200 transition-colors">Books</a>
+        <span>/</span>
+        <span class="text-zinc-200">Add New</span>
+    </div>
+
+    <div>
+        <h1 class="text-2xl font-bold tracking-tight text-white">Add New Book</h1>
+        <p class="text-sm text-zinc-400 mt-1">Enter the details of the new book to publish to the collection.</p>
+    </div>
+
+    <!-- Form Container -->
+    <div class="glass-card rounded-xl p-6 shadow-2xl">
+        <form asp-action="Create" class="space-y-4">
+            <div asp-validation-summary="ModelOnly" class="text-xs text-red-400 bg-red-950/20 border border-red-900/40 rounded-lg p-3"></div>
+
+            <!-- Title -->
+            <div class="space-y-1.5">
+                <label asp-for="Title" class="block text-xs font-semibold uppercase tracking-wider text-zinc-450">Book Title</label>
+                <input asp-for="Title" class="w-full bg-zinc-900/60 border border-zinc-800 focus:border-violet-500 focus:ring-4 focus:ring-violet-500/10 rounded-lg px-3.5 py-2 text-sm text-white placeholder-zinc-500 transition-all outline-none" placeholder="e.g., Clean Architecture" />
+                <span asp-validation-for="Title" class="block text-xs text-red-400 mt-0.5"></span>
+            </div>
+
+            <!-- Author -->
+            <div class="space-y-1.5">
+                <label asp-for="Author" class="block text-xs font-semibold uppercase tracking-wider text-zinc-450">Author Name</label>
+                <input asp-for="Author" class="w-full bg-zinc-900/60 border border-zinc-800 focus:border-violet-500 focus:ring-4 focus:ring-violet-500/10 rounded-lg px-3.5 py-2 text-sm text-white placeholder-zinc-500 transition-all outline-none" placeholder="e.g., Robert C. Martin" />
+                <span asp-validation-for="Author" class="block text-xs text-red-400 mt-0.5"></span>
+            </div>
+
+            <!-- Price -->
+            <div class="space-y-1.5">
+                <label asp-for="Price" class="block text-xs font-semibold uppercase tracking-wider text-zinc-450">Price (USD)</label>
+                <div class="relative">
+                    <span class="absolute left-3.5 top-2.5 text-sm text-zinc-500 font-mono">$</span>
+                    <input asp-for="Price" type="number" step="0.01" class="w-full bg-zinc-900/60 border border-zinc-800 focus:border-violet-500 focus:ring-4 focus:ring-violet-500/10 rounded-lg pl-8 pr-3.5 py-2 text-sm text-white placeholder-zinc-500 transition-all outline-none font-mono" placeholder="0.00" />
+                </div>
+                <span asp-validation-for="Price" class="block text-xs text-red-400 mt-0.5"></span>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex items-center justify-end space-x-3 pt-3 border-t border-zinc-800/80">
+                <a asp-action="Index" class="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-zinc-400 hover:text-zinc-100 transition-colors">
+                    Cancel
+                </a>
+                <button type="submit" class="inline-flex items-center px-4 py-2 text-xs font-semibold uppercase tracking-wider text-white bg-violet-600 rounded-lg shadow-md hover:bg-violet-500 active:bg-violet-700 transition-all duration-200 transform hover:-translate-y-0.5">
+                    Save Book
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

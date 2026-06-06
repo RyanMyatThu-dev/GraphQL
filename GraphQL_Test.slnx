@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="GraphQL_Test.Api/GraphQL_Test.Api.csproj" />
   <Project Path="GraphQL_Test.Database/GraphQL_Test.Database.csproj" />
+  <Project Path="GraphQL_Test.WebApp/GraphQL_Test.WebApp.csproj" />
 </Solution>

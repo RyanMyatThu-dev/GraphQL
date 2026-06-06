@@ -1,0 +1,56 @@
+@model GraphQL_Test.Database.Models.Book
+
+@{
+    ViewData["Title"] = "Book Details";
+}
+
+<div class="max-w-xl mx-auto space-y-6">
+    <!-- Header -->
+    <div class="flex items-center space-x-2 text-sm text-zinc-400">
+        <a asp-action="Index" class="hover:text-zinc-200 transition-colors">Books</a>
+        <span>/</span>
+        <span class="text-zinc-200">Details</span>
+    </div>
+
+    <div>
+        <h1 class="text-2xl font-bold tracking-tight text-white">Book Information</h1>
+        <p class="text-sm text-zinc-400 mt-1">Review the details and pricing information of this book.</p>
+    </div>
+
+    <!-- Info Card -->
+    <div class="glass-card rounded-xl p-6 shadow-2xl space-y-5">
+        <div class="space-y-4">
+            <h3 class="text-sm font-semibold uppercase tracking-wider text-zinc-450">Metadata</h3>
+            
+            <dl class="grid grid-cols-3 gap-4 text-sm border-t border-b border-zinc-800/80 py-4">
+                <div class="col-span-1 text-zinc-500 font-medium">Record ID</div>
+                <div class="col-span-2 text-zinc-400 font-mono">@Model.Id</div>
+
+                <div class="col-span-1 text-zinc-500 font-medium">Title</div>
+                <div class="col-span-2 text-white font-semibold">@Model.Title</div>
+
+                <div class="col-span-1 text-zinc-500 font-medium">Author</div>
+                <div class="col-span-2 text-zinc-300">@Model.Author</div>
+
+                <div class="col-span-1 text-zinc-500 font-medium">Price</div>
+                <div class="col-span-2 font-mono text-violet-300">@Model.Price.ToString("C")</div>
+            </dl>
+        </div>
+
+        <div class="flex items-center justify-between pt-2">
+            <a asp-action="Index" class="inline-flex items-center text-xs font-semibold uppercase tracking-wider text-zinc-400 hover:text-zinc-100 transition-colors">
+                <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                </svg>
+                Back to Directory
+            </a>
+            
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="inline-flex items-center px-4 py-2 text-xs font-semibold uppercase tracking-wider text-white bg-violet-600 rounded-lg shadow-md hover:bg-violet-500 active:bg-violet-700 transition-all duration-200 transform hover:-translate-y-0.5">
+                <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                </svg>
+                Edit Book
+            </a>
+        </div>
+    </div>
+</div>
